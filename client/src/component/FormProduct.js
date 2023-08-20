@@ -2,7 +2,24 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
+//input
 import { remove, create, showdata } from "../functions/product";
+import { Button } from "@mui/material";
+//table
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+//icon
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
+
 const FormProduct = () => {
   const [data, setData] = useState([]);
   const [form, setForm] = useState({});
@@ -57,69 +74,89 @@ const FormProduct = () => {
   return (
     <div>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input
-          type="text"
-          name="name"
-          onChange={(e) => handleChange(e)}
-          placeholder="ชื่อ-นามสกุล"
-        />
+
+      <TextField  id="outlined-basic" 
+                  label="ชื่อ" 
+                  name="name"
+                  onChange={(e) => handleChange(e)}
+                  variant="outlined" />
         <br />
 
-        <input
-          type="text"
-          name="detial"
-          onChange={(e) => handleChange(e)}
-          placeholder="รายละเอียด"
-        />
+        <TextField  id="outlined-basic" 
+                    label="รายละเอียด" 
+                    name="name"
+                    onChange={(e) => handleChange(e)}
+                    variant="outlined" />       
         <br />
 
-        <input 
-          type="file" 
-          name="file" 
-          onChange={(e) => handleChange(e)} />
+        <TextField  id="outlined-basic"
+                    type="file"  
+                    label="รูป" 
+                    name="file"
+                    onChange={(e) => handleChange(e)}
+                    variant="outlined" 
+                    focused /> 
         <br />
 
-        <input
-          type="text"
-          name="price"
-          onChange={(e) => handleChange(e)}
-          placeholder="ราคา"
-        />
+        <TextField  id="outlined-basic" 
+                    type="number"  
+                    label="ราคา" 
+                    name="price"
+                    onChange={(e) => handleChange(e)}
+                    variant="outlined" />  
         <br />
 
-        <button>ส่งข้อมูล</button>
+        <Button variant="contained" type="submit">ส่งข้อมูล</Button>
       </form>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Detial</th>
-            <th scope="col">File</th>
-            <th scope="col">Price</th>
-            <th scope="col">Delete</th>
-            <th scope="col">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
+
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+
+        <TableHead>
+
+          <TableRow>
+            <TableCell>#</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Detial</TableCell>
+            <TableCell>File</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Delete</TableCell>
+            <TableCell>Edit</TableCell>
+          </TableRow>
+
+        </TableHead>
+
+        <TableBody>
           {data
             ? data.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <th>{item.name}</th>
-                  <td>{item.detial}</td>
-                  <td>{item.file}</td>
-                  <td>{item.price}</td>
-                  <td onClick={() => handleRemove(item._id)}>Delete</td>
-                  <td>
-                    <Link to={"/edit/" + item._id}>Edit</Link>
-                  </td>
-                </tr>
+              <TableRow
+              key={index}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.detial}</TableCell>
+                  <TableCell>{item.file}</TableCell>
+                  <TableCell>{item.price}</TableCell>
+
+                  <TableCell >
+                    <DeleteForeverIcon color="error" onClick={() => handleRemove(item._id)}/>
+                  </TableCell>
+
+                  <TableCell>
+                    <Link to={"/edit/" + item._id}>
+                      <EditIcon/>
+                    </Link>
+                  </TableCell>
+
+                </TableRow>
               ))
             : null}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
+    </TableContainer>
+
     </div>
   );
 };
