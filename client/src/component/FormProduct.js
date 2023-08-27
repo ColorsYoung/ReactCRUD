@@ -84,7 +84,7 @@ const FormProduct = () => {
 
         <TextField  id="outlined-basic" 
                     label="รายละเอียด" 
-                    name="name"
+                    name="detial"
                     onChange={(e) => handleChange(e)}
                     variant="outlined" />       
         <br />

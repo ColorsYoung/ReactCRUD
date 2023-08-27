@@ -7,13 +7,23 @@ import FormEditProduct from './component/FormEditProduct';
 import HeaderBar from "./layout/HearderBar";
 import SideBar from './layout/Sidebar';
 import { CssBaseline, Box } from "@mui/material";
+import TestRedux1 from './component/TestRedux1';
+import TestRedux2 from './component/TestRedux2';
+//pages
+import Register from './component/pages/auth/Register';
+import Login from './component/pages/auth/Login';
 
 
 function App() {
   return (
     <BrowserRouter>
-        <>
+    <>
     <CssBaseline />
+    <Routes>
+      <Route path='/register' element={<Register/>}/>
+      <Route path='/login' element={<Login/>}/>
+      
+    </Routes>
     <div className="app">
       <SideBar/>
       <main className="content">
@@ -21,21 +31,17 @@ function App() {
         <div className="content_body">
           <Box m="20px">
 
-
         <Routes>
-
             <Route path='/admin/viewdata' element={<FormProduct/>}/>
             <Route path='/edit/:id' element={<FormEditProduct/>}/>
-
         </Routes>
 
-
-        
-    
         </Box>
         </div>
       </main>
     </div>
+    {/* <TestRedux1/>
+    <TestRedux2/> */}
     </>
     </BrowserRouter>
   );
